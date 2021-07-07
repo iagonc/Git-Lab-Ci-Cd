@@ -1,5 +1,13 @@
 image: node
+stages:
+  - build
+  - test
+  - deploy
 build site:
+  stage: build
+  artifacts:
+    paths:
+      - ./website/build/gitlabci
   script:
     - npm --version
     - cd website
