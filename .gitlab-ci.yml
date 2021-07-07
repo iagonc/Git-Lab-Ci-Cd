@@ -1,6 +1,9 @@
+image: node
 build site:
   script:
     - ls -ltra
     - pwd
     - whoami
     - npm --version
+    - npm install
+    - npm run build
