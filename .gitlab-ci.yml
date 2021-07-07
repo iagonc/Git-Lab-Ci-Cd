@@ -7,7 +7,7 @@ build site:
   stage: build
   artifacts:
     paths:
-      - ./website/build/gitlabci
+      - ./website/build/
   script:
     - npm --version
     - cd website
