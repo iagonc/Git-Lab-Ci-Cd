@@ -32,3 +32,5 @@ deploy website:
   environment:
     name: staging
     url: http://necessary-destruction.surge.sh
+  only:
+    - develop
