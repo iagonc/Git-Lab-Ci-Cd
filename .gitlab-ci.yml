@@ -3,6 +3,9 @@ stages:
   - build
   - test
   - deploy
+cache:
+  paths:
+    - ./website/build
 build site:
   stage: build
   artifacts:
@@ -10,9 +13,14 @@ build site:
     when: on_success
     expire_in: 2h20min
     paths:
-      - ./website/build/
+      - ./website/build/test-site
   script:
     - npm --version
     - cd website
     - npm install
     - npm run build
+deploy website:
+  stage: deploy
+  script:
+    - npm install -g surge
+    - surge --project /website/build/test-site --domain teste-site.surge.sh
