@@ -6,6 +6,8 @@ stages:
 cache:
   paths:
     - ./website/build
+before_script:
+  - whoami
 build site:
   stage: build
   artifacts:
@@ -13,7 +15,7 @@ build site:
     when: on_success
     expire_in: 2h20min
     paths:
-      - ./website/build/test-site
+      - ./website/build/
   script:
     - npm --version
     - cd website
@@ -23,4 +25,10 @@ deploy website:
   stage: deploy
   script:
     - npm install -g surge
-    - surge --project /website/build/test-site --domain teste-site.surge.sh
+    - surge --project /website/build/test-site --domain necessary-destruction.surge.sh
+  after_script:
+    - whoami
+
+  environment:
+    name: staging
+    url: http://necessary-destruction.surge.sh
