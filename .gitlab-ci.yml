@@ -25,7 +25,7 @@ deploy website:
   stage: deploy
   script:
     - npm install -g surge
-    - surge --project /website/build/ --domain necessary-destruction.surge.sh
+    - surge --project ./website/build/test-site --domain necessary-destruction.surge.sh
   after_script:
     - whoami
 
