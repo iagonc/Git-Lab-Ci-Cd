@@ -21,7 +21,7 @@ test site:
     - blc --recursive --exclude-external https://necessary-destruction.surge.sh/
 
 package site:
-  stage: build
+  stage: package
   artifacts:
     name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
     when: on_success
