@@ -4,10 +4,6 @@ stages:
   - package
   - deploy
 
-cache:
-  paths:
-    - ./website/build
-
 before_script:
   - whoami
 test site:
@@ -22,6 +18,12 @@ test site:
 
 package site:
   stage: package
+  cache:
+    key: site-package
+    policy: push
+    paths:
+      - ./website/build
+
   artifacts:
     name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
     when: on_success
@@ -33,8 +35,15 @@ package site:
     - cd website
     - npm install
     - npm run build
-deploy to staging:
+
+
+deploy site:
   stage: deploy
+  cache:
+    key: site-package
+    policy: pull
+    paths:
+      - ./website/build
   script:
     - npm install -g surge
     - surge --project ./website/build/test-site --domain necessary-destruction.surge.sh
