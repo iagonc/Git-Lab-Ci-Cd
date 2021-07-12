@@ -43,6 +43,9 @@ package site:
 
 deploy site:
   stage: deploy
+  variables:
+   CNAME: necessary-destruction.surge.sh
+   GIT_STRATEGY: none
   cache:
     key: site-package
     policy: pull
@@ -50,12 +53,33 @@ deploy site:
       - ./website/build
   script:
     - npm install -g surge
-    - surge --project ./website/build/test-site --domain necessary-destruction.surge.sh
+    - surge --project ./website/build/test-site --domain ${CNAME}
   after_script:
     - whoami
 
   environment:
     name: staging
-    url: http://necessary-destruction.surge.sh
+    url: http://${CNAME}
   only:
     - develop
+deploy to production:
+  stage: deploy
+  variables:
+    CNAME: necessary-destruction.surge.sh
+    GIT_STRATEGY: none
+  cache:
+    key: site-package
+    policy: pull
+    paths:
+      - ./website/build
+  script:
+    - npm install -g surge
+    - surge --project ./website/build/test-site --domain ${CNAME}
+  after_script:
+    - whoami
+
+  environment:
+    name: staging
+    url: http://${CNAME}
+  only:
+    - master
