@@ -91,9 +91,10 @@ deploy to release:
 stop_review:
   stage: deploy
   variables:
-   CNAME: necessary-destruction.surge.sh
+   CNAME: $CI_COMMIT_REF_SLUG.necessary-destruction.surge.sh
    GIT_STRATEGY: none
   script:
+    - npm install -g surge
     - surge teardown ${CNAME}
   when: manual
   environment:
